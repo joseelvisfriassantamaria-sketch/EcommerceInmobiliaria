@@ -1,0 +1,38 @@
+﻿@model List<Usuario>
+@inject AutorizacionService Auth
+@{
+    ViewData["Title"] = "Usuarios";
+    var ctx = await Auth.ObtenerContextoAsync(User);
+    var puedeGestionar = ctx.Permisos.Contains("USUARIOS_GESTIONAR");
+}
+
+<h1 class="h3 mb-3">Usuarios</h1>
+<div class="card shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr><th>Nombre</th><th>Correo</th><th>Rol</th><th>Estado</th><th>Registro (UTC)</th>@if (puedeGestionar) {<th></th>}</tr>
+            </thead>
+            <tbody>
+            @foreach (var u in Model)
+            {
+                <tr>
+                    <td>@u.NombreCompleto</td>
+                    <td>@u.Email</td>
+                    <td><span class="badge text-bg-primary">@u.RolNombre</span></td>
+                    <td>
+                        @if (!u.Activo) { <span class="badge text-bg-secondary">Inactivo</span> }
+                        else if (u.BloqueadoHasta.HasValue && u.BloqueadoHasta.Value > DateTime.UtcNow) { <span class="badge text-bg-warning">Bloqueado</span> }
+                        else { <span class="badge text-bg-success">Activo</span> }
+                    </td>
+                    <td>@u.FechaRegistro.ToString("yyyy-MM-dd HH:mm")</td>
+                    @if (puedeGestionar)
+                    {
+                        <td class="text-end"><a class="btn btn-sm btn-outline-dark" asp-action="Editar" asp-route-id="@u.UsuarioId">Asignar rol</a></td>
+                    }
+                </tr>
+            }
+            </tbody>
+        </table>
+    </div>
+</div>

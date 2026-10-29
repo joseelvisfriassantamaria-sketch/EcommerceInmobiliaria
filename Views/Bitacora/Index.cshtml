@@ -1,0 +1,54 @@
+﻿@model List<RegistroAcceso>
+@{
+    ViewData["Title"] = "Bitácora";
+    var eventos = new[] { "LOGIN_OK", "LOGIN_FAIL", "LOGOUT", "REGISTRO", "ACCESO_DENEGADO", "CUENTA_BLOQUEADA",
+                          "ROL_ASIGNADO", "USUARIO_ACTIVADO", "USUARIO_DESACTIVADO", "ROL_CREADO", "ROL_EDITADO", "PERMISOS_ACTUALIZADOS" };
+    string? evSel = ViewBag.Evento as string;
+}
+
+<h1 class="h3 mb-3">Bitácora de accesos</h1>
+
+<form method="get" class="row g-2 mb-3">
+    <div class="col-md-4">
+        <select name="evento" class="form-select">
+            <option value="">Todos los eventos</option>
+            @foreach (var e in eventos)
+            {
+                <option value="@e" selected="@(e == evSel)">@e</option>
+            }
+        </select>
+    </div>
+    <div class="col-md-4"><input name="email" class="form-control" placeholder="Filtrar por correo" value="@(ViewBag.Email as string)" /></div>
+    <div class="col-md-4"><button class="btn btn-dark" type="submit">Filtrar</button> <a class="btn btn-link" asp-action="Index">Limpiar</a></div>
+</form>
+
+<div class="card shadow-sm">
+    <div class="table-responsive">
+        <table class="table table-sm table-hover align-middle mb-0">
+            <thead class="table-light">
+                <tr><th>Fecha (UTC)</th><th>Evento</th><th>Correo</th><th>Detalle</th><th>IP</th></tr>
+            </thead>
+            <tbody>
+            @foreach (var r in Model)
+            {
+                var clase = r.Evento switch
+                {
+                    "LOGIN_OK" or "REGISTRO" => "text-bg-success",
+                    "LOGIN_FAIL" or "ACCESO_DENEGADO" or "CUENTA_BLOQUEADA" => "text-bg-danger",
+                    "LOGOUT" => "text-bg-secondary",
+                    _ => "text-bg-info"
+                };
+                <tr>
+                    <td class="text-nowrap">@r.Fecha.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                    <td><span class="badge @clase">@r.Evento</span></td>
+                    <td>@r.Email</td>
+                    <td>@r.Detalle</td>
+                    <td>@r.Ip</td>
+                </tr>
+            }
+            @if (Model.Count == 0) { <tr><td colspan="5" class="text-center text-muted py-4">Sin registros.</td></tr> }
+            </tbody>
+        </table>
+    </div>
+</div>
+<p class="text-muted small mt-2">Se muestran los 200 eventos más recientes.</p>

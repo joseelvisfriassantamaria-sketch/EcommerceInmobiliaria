@@ -1,0 +1,34 @@
+﻿@inject AutorizacionService Auth
+@{
+    ViewData["Title"] = "Diseños";
+    var ctx = await Auth.ObtenerContextoAsync(User);
+    var muestra = new[]
+    {
+        (Nombre: "Residencia moderna 3 niveles", Estado: "En revisión"),
+        (Nombre: "Remodelación de oficina",       Estado: "Aprobado"),
+        (Nombre: "Villa tropical",                Estado: "Borrador")
+    };
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Diseños arquitectónicos</h1>
+    @if (ctx.Permisos.Contains("DISENOS_GESTIONAR"))
+    {
+        <a class="btn btn-dark" asp-action="Nuevo">Nuevo proyecto de diseño</a>
+    }
+</div>
+<p class="text-muted">Módulo de ejemplo para demostrar restricciones por perfil (se completa en épicas posteriores).</p>
+
+<div class="row g-3">
+    @foreach (var d in muestra)
+    {
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <span class="badge text-bg-secondary mb-2">@d.Estado</span>
+                    <h2 class="h6 mb-0">@d.Nombre</h2>
+                </div>
+            </div>
+        </div>
+    }
+</div>

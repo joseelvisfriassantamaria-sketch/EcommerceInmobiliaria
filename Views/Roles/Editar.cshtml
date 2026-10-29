@@ -1,0 +1,32 @@
+﻿@model RolFormViewModel
+@{ ViewData["Title"] = "Editar rol"; }
+
+<div class="row justify-content-center">
+    <div class="col-md-6">
+        <div class="card shadow-sm">
+            <div class="card-body p-4">
+                <h1 class="h4 mb-3">Editar rol</h1>
+                <form asp-action="Editar" method="post" novalidate>
+                    <input type="hidden" asp-for="RolId" />
+                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
+                    <div class="mb-3">
+                        <label asp-for="Nombre" class="form-label">Nombre</label>
+                        <input asp-for="Nombre" class="form-control" />
+                        <span asp-validation-for="Nombre" class="text-danger small"></span>
+                    </div>
+                    <div class="mb-3">
+                        <label asp-for="Descripcion" class="form-label">Descripción</label>
+                        <input asp-for="Descripcion" class="form-control" />
+                        <span asp-validation-for="Descripcion" class="text-danger small"></span>
+                    </div>
+                    <div class="form-check mb-3">
+                        <input asp-for="Activo" class="form-check-input" />
+                        <label asp-for="Activo" class="form-check-label">Rol activo</label>
+                    </div>
+                    <button class="btn btn-dark" type="submit">Guardar</button>
+                    <a class="btn btn-link" asp-action="Index">Cancelar</a>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

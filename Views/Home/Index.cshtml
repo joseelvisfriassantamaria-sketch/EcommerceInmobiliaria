@@ -1,0 +1,40 @@
+﻿@inject AutorizacionService Auth
+@{
+    ViewData["Title"] = "Inicio";
+    var ctx = await Auth.ObtenerContextoAsync(User);
+    var modulos = new[]
+    {
+        (Permiso: "PROPIEDADES_VER", Titulo: "Propiedades",       Desc: "Catálogo de inmuebles en venta y alquiler.",      Ctrl: "Propiedades"),
+        (Permiso: "DISENOS_VER",     Titulo: "Diseños",           Desc: "Proyectos de diseño arquitectónico.",              Ctrl: "Disenos"),
+        (Permiso: "USUARIOS_VER",    Titulo: "Usuarios",          Desc: "Consulta y administración de usuarios.",           Ctrl: "Usuarios"),
+        (Permiso: "ROLES_GESTIONAR", Titulo: "Roles y permisos",  Desc: "Defina qué puede hacer cada perfil.",              Ctrl: "Roles"),
+        (Permiso: "BITACORA_VER",    Titulo: "Bitácora",          Desc: "Trazabilidad de accesos y operaciones.",           Ctrl: "Bitacora")
+    };
+    var visibles = modulos.Where(m => ctx.Permisos.Contains(m.Permiso)).ToList();
+}
+
+<h1 class="h3 mb-1">Bienvenido, @User.Identity!.Name</h1>
+<p class="text-muted">Perfil actual: <strong>@(string.IsNullOrEmpty(ctx.Rol) ? "sin rol activo" : ctx.Rol)</strong></p>
+
+@if (visibles.Count == 0)
+{
+    <div class="alert alert-warning">Su perfil no tiene módulos habilitados. Contacte al administrador.</div>
+}
+else
+{
+    <div class="row g-3">
+        @foreach (var m in visibles)
+        {
+            <div class="col-md-4">
+                <a class="text-decoration-none" asp-controller="@m.Ctrl" asp-action="Index">
+                    <div class="card card-modulo h-100">
+                        <div class="card-body">
+                            <h2 class="h5 text-dark">@m.Titulo</h2>
+                            <p class="text-muted mb-0">@m.Desc</p>
+                        </div>
+                    </div>
+                </a>
+            </div>
+        }
+    </div>
+}

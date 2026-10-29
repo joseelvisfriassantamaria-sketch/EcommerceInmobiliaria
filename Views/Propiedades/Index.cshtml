@@ -1,0 +1,35 @@
+﻿@inject AutorizacionService Auth
+@{
+    ViewData["Title"] = "Propiedades";
+    var ctx = await Auth.ObtenerContextoAsync(User);
+    var muestra = new[]
+    {
+        (Nombre: "Apartamento Piantini",  Tipo: "Venta",     Precio: "US$ 185,000"),
+        (Nombre: "Casa Los Cacicazgos",   Tipo: "Venta",     Precio: "US$ 420,000"),
+        (Nombre: "Local comercial Naco",  Tipo: "Alquiler",  Precio: "US$ 1,800 / mes")
+    };
+}
+
+<div class="d-flex justify-content-between align-items-center mb-3">
+    <h1 class="h3 mb-0">Propiedades</h1>
+    @if (ctx.Permisos.Contains("PROPIEDADES_GESTIONAR"))
+    {
+        <a class="btn btn-dark" asp-action="Publicar">Publicar propiedad</a>
+    }
+</div>
+<p class="text-muted">Módulo de ejemplo para demostrar restricciones por perfil (se completa en épicas posteriores).</p>
+
+<div class="row g-3">
+    @foreach (var p in muestra)
+    {
+        <div class="col-md-4">
+            <div class="card shadow-sm h-100">
+                <div class="card-body">
+                    <span class="badge text-bg-dark mb-2">@p.Tipo</span>
+                    <h2 class="h6">@p.Nombre</h2>
+                    <p class="mb-0 text-muted">@p.Precio</p>
+                </div>
+            </div>
+        </div>
+    }
+</div>
