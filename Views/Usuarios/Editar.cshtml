@@ -1,32 +1,31 @@
 ﻿@model EditarUsuarioViewModel
 @{ ViewData["Title"] = "Asignar rol"; }
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h1 class="h4 mb-1">Asignar rol</h1>
-                <p class="text-muted">@Model.Usuario.NombreCompleto · @Model.Usuario.Email</p>
-                <form asp-action="Editar" method="post">
-                    <input type="hidden" name="id" value="@Model.Usuario.UsuarioId" />
-                    <div class="mb-3">
-                        <label class="form-label" for="rolId">Rol</label>
-                        <select class="form-select" id="rolId" name="rolId">
-                            @foreach (var r in Model.Roles)
-                            {
-                                <option value="@r.RolId" selected="@(r.RolId == Model.Usuario.RolId)">@r.Nombre @(r.Activo ? "" : "(inactivo)")</option>
-                            }
-                        </select>
-                    </div>
-                    <div class="form-check mb-3">
-                        <input class="form-check-input" type="checkbox" id="activo" name="activo" value="true" checked="@Model.Usuario.Activo" />
-                        <input type="hidden" name="activo" value="false" />
-                        <label class="form-check-label" for="activo">Cuenta activa</label>
-                    </div>
-                    <button class="btn btn-dark" type="submit">Guardar</button>
-                    <a class="btn btn-link" asp-action="Index">Cancelar</a>
-                </form>
-            </div>
+<div class="trd-page-head"><h1>Asignar rol</h1></div>
+
+<div class="trd-panel" style="max-width:520px">
+    <p class="trd-muted" style="margin:0 0 18px">
+        <strong style="color:var(--trd-ink)">@Model.Usuario.NombreCompleto</strong><br />@Model.Usuario.Email
+    </p>
+    <form asp-action="Editar" method="post">
+        <input type="hidden" name="id" value="@Model.Usuario.UsuarioId" />
+        <div class="trd-field">
+            <label class="trd-label" for="rolId">Rol</label>
+            <select class="trd-input" id="rolId" name="rolId">
+                @foreach (var r in Model.Roles)
+                {
+                    <option value="@r.RolId" selected="@(r.RolId == Model.Usuario.RolId)">@r.Nombre @(r.Activo ? "" : "(inactivo)")</option>
+                }
+            </select>
         </div>
-    </div>
+        <div class="trd-check" style="border:none;padding:4px 0 18px">
+            <input type="checkbox" id="activo" name="activo" value="true" checked="@Model.Usuario.Activo" />
+            <input type="hidden" name="activo" value="false" />
+            <span class="trd-check__txt"><b>Cuenta activa</b><small>Si se desactiva, el usuario no podrá iniciar sesión.</small></span>
+        </div>
+        <div class="trd-actions">
+            <button class="btn-trd btn-trd--primary btn-trd--sm" type="submit">Guardar</button>
+            <a class="btn-trd btn-trd--outline btn-trd--sm" asp-action="Index">Cancelar</a>
+        </div>
+    </form>
 </div>

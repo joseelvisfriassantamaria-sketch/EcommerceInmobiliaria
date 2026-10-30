@@ -4,40 +4,36 @@
     var esAdmin = Model.Rol.Nombre == "Administrador";
 }
 
-<h1 class="h3 mb-1">Permisos del rol: @Model.Rol.Nombre</h1>
-<p class="text-muted">Marque lo que este perfil puede hacer. Los cambios se aplican de inmediato a todos los usuarios con este rol.</p>
+<div class="trd-page-head">
+    <h1>Permisos · @Model.Rol.Nombre</h1>
+    <p class="trd-muted" style="margin:0">Marca lo que este perfil puede hacer. Los cambios se aplican de inmediato a todos sus usuarios.</p>
+</div>
 
 @if (esAdmin)
 {
-    <div class="alert alert-info">El rol Administrador siempre conserva todos los permisos y no se puede modificar.</div>
+    <div class="trd-alert trd-alert--warn">El rol Administrador siempre conserva todos los permisos y no se puede modificar.</div>
 }
 
 <form asp-action="Permisos" method="post">
     <input type="hidden" name="rolId" value="@Model.Rol.RolId" />
-    <div class="row g-3">
+    <div class="trd-grid">
         @foreach (var grupo in Model.Permisos.GroupBy(p => p.Modulo))
         {
-            <div class="col-md-6">
-                <div class="card shadow-sm h-100">
-                    <div class="card-header fw-semibold">@grupo.Key</div>
-                    <div class="card-body">
-                        @foreach (var p in grupo)
-                        {
-                            <div class="form-check mb-2">
-                                <input class="form-check-input" type="checkbox" name="permisoIds" value="@p.PermisoId"
-                                       id="p@(p.PermisoId)" checked="@Model.Asignados.Contains(p.PermisoId)" disabled="@esAdmin" />
-                                <label class="form-check-label" for="p@(p.PermisoId)">
-                                    @p.Descripcion <code class="ms-1 small">@p.Codigo</code>
-                                </label>
-                            </div>
-                        }
-                    </div>
-                </div>
+            <div class="trd-panel trd-permgroup">
+                <h3>@grupo.Key</h3>
+                @foreach (var p in grupo)
+                {
+                    <label class="trd-check" for="p@(p.PermisoId)">
+                        <input type="checkbox" name="permisoIds" value="@p.PermisoId"
+                               id="p@(p.PermisoId)" checked="@Model.Asignados.Contains(p.PermisoId)" disabled="@esAdmin" />
+                        <span class="trd-check__txt"><b>@p.Descripcion</b><small>@p.Codigo</small></span>
+                    </label>
+                }
             </div>
         }
     </div>
-    <div class="mt-3">
-        @if (!esAdmin) { <button class="btn btn-dark" type="submit">Guardar permisos</button> }
-        <a class="btn btn-link" asp-action="Index">Volver</a>
+    <div class="trd-actions" style="margin-top:18px">
+        @if (!esAdmin) { <button class="btn-trd btn-trd--primary btn-trd--sm" type="submit">Guardar permisos</button> }
+        <a class="btn-trd btn-trd--outline btn-trd--sm" asp-action="Index">Volver</a>
     </div>
 </form>
