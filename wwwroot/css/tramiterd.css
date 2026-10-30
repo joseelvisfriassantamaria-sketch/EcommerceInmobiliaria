@@ -1,0 +1,264 @@
+/* ==========================================================================
+   TrámiteRD — Sistema de diseño (Épica 1: Usuarios y Accesos)
+   Basado en el prototipo de app móvil de Figma. HTML/CSS/JS puro.
+   Colores y tipografía tomados del diseño original.
+   ========================================================================== */
+
+:root {
+  --trd-navy: #0a3d7a;
+  --trd-navy-dark: #082f5e;
+  --trd-navy-soft: #e8f0fe;
+  --trd-red: #d21f3c;
+  --trd-ink: #0f172a;
+  --trd-muted: #64748b;
+  --trd-border: #e2e8f0;
+  --trd-bg: #f1f5f9;
+  --trd-card: #ffffff;
+  --trd-green: #16a34a;
+  --trd-green-soft: #dcfce7;
+  --trd-amber: #f59e0b;
+  --trd-radius: 14px;
+  --trd-radius-lg: 24px;
+  --trd-shadow: 0 10px 30px rgba(15, 23, 42, .08);
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--trd-bg);
+  color: var(--trd-ink);
+  font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+  font-size: 15px;
+  line-height: 1.45;
+  -webkit-font-smoothing: antialiased;
+}
+
+a { color: var(--trd-navy); text-decoration: none; }
+a:hover { text-decoration: underline; }
+
+/* ---------- Marca / Logo ---------- */
+.trd-logo { display: inline-flex; align-items: center; gap: 10px; }
+.trd-logo__badge {
+  width: 48px; height: 48px; border-radius: 13px;
+  background: var(--trd-navy); color: #fff;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 800; font-size: 26px; position: relative;
+}
+.trd-logo__badge::after {
+  content: ""; position: absolute; top: 9px; right: 11px;
+  width: 9px; height: 9px; border-radius: 50%; background: var(--trd-red);
+}
+.trd-logo__text { font-weight: 800; font-size: 24px; letter-spacing: -.2px; }
+.trd-logo__text b { color: var(--trd-navy); font-weight: 800; }
+.trd-logo__text span { color: var(--trd-red); }
+.trd-logo--sm .trd-logo__badge { width: 36px; height: 36px; font-size: 20px; border-radius: 10px; }
+.trd-logo--sm .trd-logo__badge::after { width: 7px; height: 7px; top: 7px; right: 8px; }
+.trd-logo--sm .trd-logo__text { font-size: 19px; }
+
+/* ---------- Contenedor tipo app móvil ---------- */
+.trd-shell {
+  min-height: 100vh;
+  display: flex; flex-direction: column; align-items: center;
+  padding: 28px 16px 40px;
+}
+.trd-card {
+  width: 100%; max-width: 430px;
+  background: var(--trd-card);
+  border-radius: 28px;
+  box-shadow: var(--trd-shadow);
+  padding: 28px 24px;
+}
+
+/* ---------- Tipografía de apoyo ---------- */
+.trd-title { font-size: 28px; font-weight: 800; margin: 0 0 6px; letter-spacing: -.3px; }
+.trd-subtitle { font-size: 16px; color: var(--trd-muted); margin: 0; }
+.trd-h2 { font-size: 20px; font-weight: 800; margin: 0 0 14px; }
+.trd-muted { color: var(--trd-muted); }
+.trd-small { font-size: 12px; }
+.trd-center { text-align: center; }
+
+/* ---------- Botones ---------- */
+.btn-trd {
+  display: inline-flex; align-items: center; justify-content: center; gap: 8px;
+  width: 100%; border: none; cursor: pointer;
+  padding: 15px 18px; border-radius: var(--trd-radius);
+  font-family: inherit; font-size: 16px; font-weight: 600;
+  transition: filter .15s, transform .05s, background .15s;
+}
+.btn-trd:active { transform: translateY(1px); }
+.btn-trd--primary { background: var(--trd-navy); color: #fff; }
+.btn-trd--primary:hover { filter: brightness(1.08); text-decoration: none; }
+.btn-trd--outline {
+  background: #fff; color: var(--trd-navy);
+  border: 1.5px solid var(--trd-border);
+}
+.btn-trd--outline:hover { background: #f8fafc; text-decoration: none; }
+.btn-trd--danger { background: var(--trd-red); color: #fff; }
+.btn-trd--sm { width: auto; padding: 9px 14px; font-size: 14px; border-radius: 10px; }
+
+/* ---------- Campos de formulario ---------- */
+.trd-field { margin-bottom: 16px; }
+.trd-label { display: block; font-size: 13px; font-weight: 600; color: var(--trd-ink); margin-bottom: 7px; }
+.trd-input {
+  width: 100%; padding: 13px 14px;
+  border: 1.5px solid var(--trd-border); border-radius: 12px;
+  background: #fff; color: var(--trd-ink);
+  font-family: inherit; font-size: 15px;
+}
+.trd-input:focus { outline: none; border-color: var(--trd-navy); box-shadow: 0 0 0 3px rgba(10, 61, 122, .12); }
+.trd-input::placeholder { color: #94a3b8; }
+.trd-hint { font-size: 12px; color: var(--trd-muted); margin-top: 6px; }
+.trd-error { font-size: 12.5px; color: var(--trd-red); margin-top: 6px; display: block; }
+
+/* input con icono/acción a la derecha (p. ej. "Mostrar", "Válido") */
+.trd-input-wrap { position: relative; }
+.trd-input-wrap .trd-input { padding-right: 84px; }
+.trd-input-action {
+  position: absolute; right: 12px; top: 50%; transform: translateY(-50%);
+  background: none; border: none; cursor: pointer;
+  color: var(--trd-navy); font-weight: 600; font-size: 13px; font-family: inherit;
+}
+.trd-valid { color: var(--trd-green); font-weight: 600; font-size: 13px; }
+
+/* ---------- Chips de instituciones ---------- */
+.trd-chips { display: flex; gap: 10px; flex-wrap: wrap; justify-content: center; }
+.trd-chip {
+  background: #fff; border-radius: 14px; min-width: 70px; height: 56px;
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 12px; color: var(--trd-navy);
+  box-shadow: 0 2px 6px rgba(15,23,42,.06);
+}
+
+/* Ilustración azul suave (bloque de bienvenida) */
+.trd-illus {
+  background: var(--trd-navy-soft); border-radius: var(--trd-radius-lg);
+  padding: 22px 16px; text-align: center;
+  display: flex; flex-direction: column; gap: 10px; align-items: center;
+}
+.trd-illus__cap { color: var(--trd-navy); font-size: 13px; font-weight: 500; }
+
+/* ---------- Píldora "paso X de Y" ---------- */
+.trd-step { font-size: 13px; color: var(--trd-muted); }
+
+/* ---------- Avisos ---------- */
+.trd-alert { border-radius: 12px; padding: 12px 14px; font-size: 14px; margin-bottom: 16px; }
+.trd-alert--ok { background: var(--trd-green-soft); color: #166534; }
+.trd-alert--err { background: #fee2e2; color: #991b1b; }
+.trd-alert--warn { background: #fef3c7; color: #92400e; }
+
+/* ---------- Barra de estado falsa (look de app) ---------- */
+.trd-statusbar {
+  display: flex; align-items: center; justify-content: space-between;
+  font-size: 13px; font-weight: 600; color: var(--trd-ink);
+  padding: 2px 4px 14px;
+}
+.trd-statusbar__dots { display: inline-flex; gap: 5px; align-items: center; }
+.trd-statusbar__dots i { width: 16px; height: 10px; background: var(--trd-ink); border-radius: 3px; display: inline-block; opacity: .85; }
+.trd-statusbar__dots i:last-child { width: 24px; }
+
+/* ---------- Enlace de pie ---------- */
+.trd-foot { margin: 18px 0 0; text-align: center; font-size: 14px; color: var(--trd-muted); }
+.trd-foot a { font-weight: 600; }
+
+@media (max-width: 480px) {
+  .trd-card { padding: 22px 18px; border-radius: 22px; }
+  .trd-title { font-size: 24px; }
+}
+
+/* ==========================================================================
+   App autenticada (barra superior, contenedor, tablas, insignias)
+   ========================================================================== */
+
+.trd-topbar {
+  position: sticky; top: 0; z-index: 20;
+  background: #fff; border-bottom: 1px solid var(--trd-border);
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 20px;
+}
+.trd-topbar__user { display: flex; align-items: center; gap: 12px; font-size: 14px; }
+.trd-topbar__name { color: var(--trd-ink); font-weight: 600; }
+.trd-avatar {
+  width: 36px; height: 36px; border-radius: 50%;
+  background: var(--trd-navy-soft); color: var(--trd-navy);
+  display: inline-flex; align-items: center; justify-content: center;
+  font-weight: 700; font-size: 14px;
+}
+
+/* Navegación por módulos (debajo de la barra) */
+.trd-nav { background: #fff; border-bottom: 1px solid var(--trd-border); }
+.trd-nav__inner { max-width: 960px; margin: 0 auto; display: flex; gap: 4px; padding: 0 12px; overflow-x: auto; }
+.trd-nav a {
+  padding: 13px 14px; font-size: 14px; font-weight: 600; color: var(--trd-muted);
+  border-bottom: 2.5px solid transparent; white-space: nowrap; text-decoration: none;
+}
+.trd-nav a:hover { color: var(--trd-navy); text-decoration: none; }
+.trd-nav a.is-active { color: var(--trd-navy); border-bottom-color: var(--trd-navy); }
+
+.trd-container { max-width: 960px; margin: 0 auto; padding: 24px 20px 60px; }
+.trd-page-head { margin-bottom: 20px; }
+.trd-page-head h1 { font-size: 24px; font-weight: 800; margin: 0 0 4px; }
+
+/* Insignias / pills */
+.trd-badge {
+  display: inline-flex; align-items: center; gap: 5px;
+  padding: 3px 11px; border-radius: 999px; font-size: 12px; font-weight: 700;
+  background: var(--trd-navy-soft); color: var(--trd-navy);
+}
+.trd-badge--green { background: var(--trd-green-soft); color: #166534; }
+.trd-badge--red { background: #fee2e2; color: #991b1b; }
+.trd-badge--gray { background: #eef2f7; color: #475569; }
+.trd-badge--amber { background: #fef3c7; color: #92400e; }
+
+/* Tarjetas de módulo (dashboard) */
+.trd-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(220px, 1fr)); gap: 16px; }
+.trd-modcard {
+  background: #fff; border: 1px solid var(--trd-border); border-radius: 18px;
+  padding: 20px; display: block; text-decoration: none; color: inherit;
+  transition: transform .12s, box-shadow .12s, border-color .12s;
+}
+.trd-modcard:hover { transform: translateY(-2px); box-shadow: var(--trd-shadow); border-color: #cdd7e6; text-decoration: none; }
+.trd-modcard__icon {
+  width: 46px; height: 46px; border-radius: 12px; background: var(--trd-navy-soft);
+  display: inline-flex; align-items: center; justify-content: center; font-size: 22px; margin-bottom: 12px;
+}
+.trd-modcard__title { font-size: 17px; font-weight: 700; margin: 0 0 4px; color: var(--trd-ink); }
+.trd-modcard__desc { font-size: 13.5px; color: var(--trd-muted); margin: 0; }
+
+/* Tabla */
+.trd-tablewrap { background: #fff; border: 1px solid var(--trd-border); border-radius: 16px; overflow: hidden; }
+.trd-table { width: 100%; border-collapse: collapse; font-size: 14px; }
+.trd-table thead th {
+  text-align: left; background: #f8fafc; color: var(--trd-muted);
+  font-size: 12px; font-weight: 700; text-transform: uppercase; letter-spacing: .4px;
+  padding: 12px 16px; border-bottom: 1px solid var(--trd-border);
+}
+.trd-table tbody td { padding: 13px 16px; border-bottom: 1px solid #eef2f7; color: var(--trd-ink); }
+.trd-table tbody tr:last-child td { border-bottom: none; }
+.trd-table tbody tr:hover { background: #f8fafc; }
+.trd-table .num { text-align: right; font-variant-numeric: tabular-nums; }
+
+/* Panel/card genérico de contenido */
+.trd-panel { background: #fff; border: 1px solid var(--trd-border); border-radius: 18px; padding: 24px; }
+.trd-panel + .trd-panel { margin-top: 16px; }
+
+/* Lista de permisos (checkboxes agrupados) */
+.trd-permgroup { margin-bottom: 18px; }
+.trd-permgroup h3 { font-size: 13px; text-transform: uppercase; letter-spacing: .4px; color: var(--trd-muted); margin: 0 0 10px; }
+.trd-check { display: flex; align-items: flex-start; gap: 10px; padding: 9px 0; border-bottom: 1px solid #f1f5f9; }
+.trd-check input { width: 18px; height: 18px; margin-top: 2px; accent-color: var(--trd-navy); }
+.trd-check__txt b { display: block; font-size: 14px; }
+.trd-check__txt small { color: var(--trd-muted); }
+
+/* Barra de acciones */
+.trd-actions { display: flex; gap: 10px; flex-wrap: wrap; align-items: center; }
+.trd-row-between { display: flex; justify-content: space-between; align-items: center; gap: 12px; flex-wrap: wrap; }
+
+/* Filtros */
+.trd-filters { display: flex; gap: 10px; flex-wrap: wrap; margin-bottom: 16px; }
+.trd-filters .trd-input, .trd-filters select.trd-input { width: auto; min-width: 180px; }
+
+@media (max-width: 560px) {
+  .trd-nav__inner { padding: 0 6px; }
+  .trd-container { padding: 18px 14px 60px; }
+}

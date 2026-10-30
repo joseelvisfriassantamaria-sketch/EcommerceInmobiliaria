@@ -6,49 +6,49 @@
     string? evSel = ViewBag.Evento as string;
 }
 
-<h1 class="h3 mb-3">Bitácora de accesos</h1>
+<div class="trd-page-head">
+    <h1>Bitácora de accesos</h1>
+    <p class="trd-muted" style="margin:0">Trazabilidad de las operaciones del sistema.</p>
+</div>
 
-<form method="get" class="row g-2 mb-3">
-    <div class="col-md-4">
-        <select name="evento" class="form-select">
-            <option value="">Todos los eventos</option>
-            @foreach (var e in eventos)
-            {
-                <option value="@e" selected="@(e == evSel)">@e</option>
-            }
-        </select>
-    </div>
-    <div class="col-md-4"><input name="email" class="form-control" placeholder="Filtrar por correo" value="@(ViewBag.Email as string)" /></div>
-    <div class="col-md-4"><button class="btn btn-dark" type="submit">Filtrar</button> <a class="btn btn-link" asp-action="Index">Limpiar</a></div>
+<form method="get" class="trd-filters">
+    <select name="evento" class="trd-input">
+        <option value="">Todos los eventos</option>
+        @foreach (var e in eventos)
+        {
+            <option value="@e" selected="@(e == evSel)">@e</option>
+        }
+    </select>
+    <input name="email" class="trd-input" placeholder="Filtrar por correo" value="@(ViewBag.Email as string)" />
+    <button class="btn-trd btn-trd--primary btn-trd--sm" type="submit">Filtrar</button>
+    <a class="btn-trd btn-trd--outline btn-trd--sm" asp-action="Index">Limpiar</a>
 </form>
 
-<div class="card shadow-sm">
-    <div class="table-responsive">
-        <table class="table table-sm table-hover align-middle mb-0">
-            <thead class="table-light">
-                <tr><th>Fecha (UTC)</th><th>Evento</th><th>Correo</th><th>Detalle</th><th>IP</th></tr>
-            </thead>
-            <tbody>
-            @foreach (var r in Model)
+<div class="trd-tablewrap">
+    <table class="trd-table">
+        <thead>
+            <tr><th>Fecha (UTC)</th><th>Evento</th><th>Correo</th><th>Detalle</th><th>IP</th></tr>
+        </thead>
+        <tbody>
+        @foreach (var r in Model)
+        {
+            var clase = r.Evento switch
             {
-                var clase = r.Evento switch
-                {
-                    "LOGIN_OK" or "REGISTRO" => "text-bg-success",
-                    "LOGIN_FAIL" or "ACCESO_DENEGADO" or "CUENTA_BLOQUEADA" => "text-bg-danger",
-                    "LOGOUT" => "text-bg-secondary",
-                    _ => "text-bg-info"
-                };
-                <tr>
-                    <td class="text-nowrap">@r.Fecha.ToString("yyyy-MM-dd HH:mm:ss")</td>
-                    <td><span class="badge @clase">@r.Evento</span></td>
-                    <td>@r.Email</td>
-                    <td>@r.Detalle</td>
-                    <td>@r.Ip</td>
-                </tr>
-            }
-            @if (Model.Count == 0) { <tr><td colspan="5" class="text-center text-muted py-4">Sin registros.</td></tr> }
-            </tbody>
-        </table>
-    </div>
+                "LOGIN_OK" or "REGISTRO" => "trd-badge--green",
+                "LOGIN_FAIL" or "ACCESO_DENEGADO" or "CUENTA_BLOQUEADA" => "trd-badge--red",
+                "LOGOUT" => "trd-badge--gray",
+                _ => "trd-badge"
+            };
+            <tr>
+                <td style="white-space:nowrap">@r.Fecha.ToString("yyyy-MM-dd HH:mm:ss")</td>
+                <td><span class="trd-badge @clase">@r.Evento</span></td>
+                <td>@r.Email</td>
+                <td class="trd-muted">@r.Detalle</td>
+                <td class="trd-muted">@r.Ip</td>
+            </tr>
+        }
+        @if (Model.Count == 0) { <tr><td colspan="5" class="trd-muted" style="text-align:center;padding:30px">Sin registros.</td></tr> }
+        </tbody>
+    </table>
 </div>
-<p class="text-muted small mt-2">Se muestran los 200 eventos más recientes.</p>
+<p class="trd-muted trd-small" style="margin-top:10px">Se muestran los 200 eventos más recientes.</p>

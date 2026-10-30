@@ -1,33 +1,34 @@
 ﻿@model List<Rol>
 @{ ViewData["Title"] = "Roles y permisos"; }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-0">Roles y permisos</h1>
-    <a class="btn btn-dark" asp-action="Crear">Nuevo rol</a>
+<div class="trd-row-between trd-page-head">
+    <div>
+        <h1>Roles y permisos</h1>
+        <p class="trd-muted" style="margin:0">Define qué puede hacer cada perfil.</p>
+    </div>
+    <a class="btn-trd btn-trd--primary btn-trd--sm" asp-action="Crear">+ Nuevo rol</a>
 </div>
 
-<div class="card shadow-sm">
-    <div class="table-responsive">
-        <table class="table table-hover align-middle mb-0">
-            <thead class="table-light">
-                <tr><th>Rol</th><th>Descripción</th><th class="text-center">Usuarios</th><th class="text-center">Permisos</th><th>Estado</th><th></th></tr>
-            </thead>
-            <tbody>
-            @foreach (var r in Model)
-            {
-                <tr>
-                    <td class="fw-semibold">@r.Nombre</td>
-                    <td class="text-muted">@r.Descripcion</td>
-                    <td class="text-center">@r.TotalUsuarios</td>
-                    <td class="text-center">@r.TotalPermisos</td>
-                    <td>@if (r.Activo) { <span class="badge text-bg-success">Activo</span> } else { <span class="badge text-bg-secondary">Inactivo</span> }</td>
-                    <td class="text-end">
-                        <a class="btn btn-sm btn-outline-dark" asp-action="Permisos" asp-route-id="@r.RolId">Permisos</a>
-                        <a class="btn btn-sm btn-outline-secondary" asp-action="Editar" asp-route-id="@r.RolId">Editar</a>
-                    </td>
-                </tr>
-            }
-            </tbody>
-        </table>
-    </div>
+<div class="trd-tablewrap">
+    <table class="trd-table">
+        <thead>
+            <tr><th>Rol</th><th>Descripción</th><th class="num">Usuarios</th><th class="num">Permisos</th><th>Estado</th><th></th></tr>
+        </thead>
+        <tbody>
+        @foreach (var r in Model)
+        {
+            <tr>
+                <td style="font-weight:700">@r.Nombre</td>
+                <td class="trd-muted">@r.Descripcion</td>
+                <td class="num">@r.TotalUsuarios</td>
+                <td class="num">@r.TotalPermisos</td>
+                <td>@if (r.Activo) { <span class="trd-badge trd-badge--green">Activo</span> } else { <span class="trd-badge trd-badge--gray">Inactivo</span> }</td>
+                <td class="num" style="white-space:nowrap">
+                    <a class="btn-trd btn-trd--outline btn-trd--sm" asp-action="Permisos" asp-route-id="@r.RolId">Permisos</a>
+                    <a class="btn-trd btn-trd--outline btn-trd--sm" asp-action="Editar" asp-route-id="@r.RolId">Editar</a>
+                </td>
+            </tr>
+        }
+        </tbody>
+    </table>
 </div>

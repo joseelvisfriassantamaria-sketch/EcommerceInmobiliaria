@@ -1,34 +1,33 @@
 ﻿@inject AutorizacionService Auth
 @{
-    ViewData["Title"] = "Diseños";
+    ViewData["Title"] = "Solicitudes";
     var ctx = await Auth.ObtenerContextoAsync(User);
     var muestra = new[]
     {
-        (Nombre: "Residencia moderna 3 niveles", Estado: "En revisión"),
-        (Nombre: "Remodelación de oficina",       Estado: "Aprobado"),
-        (Nombre: "Villa tropical",                Estado: "Borrador")
+        (Nombre: "Solicitud de cita · Pasaporte", Estado: "En proceso"),
+        (Nombre: "Acta de nacimiento",            Estado: "Aprobado"),
+        (Nombre: "Renovación de cédula",          Estado: "Borrador")
     };
 }
 
-<div class="d-flex justify-content-between align-items-center mb-3">
-    <h1 class="h3 mb-0">Diseños arquitectónicos</h1>
+<div class="trd-row-between trd-page-head">
+    <div>
+        <h1>Solicitudes</h1>
+        <p class="trd-muted" style="margin:0">Solicitudes y documentos en proceso.</p>
+    </div>
     @if (ctx.Permisos.Contains("DISENOS_GESTIONAR"))
     {
-        <a class="btn btn-dark" asp-action="Nuevo">Nuevo proyecto de diseño</a>
+        <a class="btn-trd btn-trd--primary btn-trd--sm" asp-action="Nuevo">+ Nueva solicitud</a>
     }
 </div>
-<p class="text-muted">Módulo de ejemplo para demostrar restricciones por perfil (se completa en épicas posteriores).</p>
 
-<div class="row g-3">
+<div class="trd-grid">
     @foreach (var d in muestra)
     {
-        <div class="col-md-4">
-            <div class="card shadow-sm h-100">
-                <div class="card-body">
-                    <span class="badge text-bg-secondary mb-2">@d.Estado</span>
-                    <h2 class="h6 mb-0">@d.Nombre</h2>
-                </div>
-            </div>
+        <div class="trd-modcard" style="cursor:default">
+            <span class="trd-badge trd-badge--gray" style="margin-bottom:10px">@d.Estado</span>
+            <h2 class="trd-modcard__title">@d.Nombre</h2>
         </div>
     }
 </div>
+<p class="trd-muted trd-small" style="margin-top:14px">Módulo de ejemplo para demostrar las restricciones por perfil (se completa en épicas posteriores).</p>

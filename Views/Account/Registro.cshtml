@@ -1,45 +1,82 @@
 ﻿@model RegistroViewModel
-@{ ViewData["Title"] = "Registro"; }
-
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h1 class="h4 mb-3">Crear cuenta</h1>
-                <form asp-action="Registro" method="post" novalidate>
-                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
-                    <div class="row">
-                        <div class="col-md-6 mb-3">
-                            <label asp-for="Nombre" class="form-label">Nombre</label>
-                            <input asp-for="Nombre" class="form-control" />
-                            <span asp-validation-for="Nombre" class="text-danger small"></span>
-                        </div>
-                        <div class="col-md-6 mb-3">
-                            <label asp-for="Apellido" class="form-label">Apellido</label>
-                            <input asp-for="Apellido" class="form-control" />
-                            <span asp-validation-for="Apellido" class="text-danger small"></span>
-                        </div>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Email" class="form-label">Correo</label>
-                        <input asp-for="Email" class="form-control" autocomplete="username" />
-                        <span asp-validation-for="Email" class="text-danger small"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Password" class="form-label">Contraseña</label>
-                        <input asp-for="Password" class="form-control" autocomplete="new-password" />
-                        <div class="form-text">Mínimo 8 caracteres, con mayúscula, minúscula y número.</div>
-                        <span asp-validation-for="Password" class="text-danger small"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="ConfirmarPassword" class="form-label">Confirmar contraseña</label>
-                        <input asp-for="ConfirmarPassword" class="form-control" autocomplete="new-password" />
-                        <span asp-validation-for="ConfirmarPassword" class="text-danger small"></span>
-                    </div>
-                    <button class="btn btn-dark w-100" type="submit">Registrarme</button>
-                </form>
-                <p class="mt-3 mb-0 small text-center">¿Ya tiene cuenta? <a asp-action="Login">Inicie sesión</a></p>
+@{
+    ViewData["Title"] = "Crear cuenta";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Crear cuenta · TrámiteRD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/tramiterd.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="trd-shell">
+        <div class="trd-card">
+            <div class="trd-statusbar">
+                <span>9:41</span>
+                <span class="trd-statusbar__dots"><i></i><i></i><i></i></span>
             </div>
+
+            <div class="trd-logo trd-logo--sm" style="margin-bottom:16px">
+                <span class="trd-logo__badge">T</span>
+                <span class="trd-logo__text"><b>Trámite</b><span>RD</span></span>
+            </div>
+
+            <h1 class="trd-title">Crear cuenta</h1>
+            <p class="trd-subtitle" style="margin-bottom:22px">Regístrate para gestionar tus trámites.</p>
+
+            <form asp-action="Registro" method="post" novalidate>
+                <div asp-validation-summary="ModelOnly" class="trd-alert trd-alert--err"></div>
+
+                <div class="trd-field">
+                    <label asp-for="Nombre" class="trd-label">Nombre</label>
+                    <input asp-for="Nombre" class="trd-input" autocomplete="given-name" />
+                    <span asp-validation-for="Nombre" class="trd-error"></span>
+                </div>
+
+                <div class="trd-field">
+                    <label asp-for="Apellido" class="trd-label">Apellido</label>
+                    <input asp-for="Apellido" class="trd-input" autocomplete="family-name" />
+                    <span asp-validation-for="Apellido" class="trd-error"></span>
+                </div>
+
+                <div class="trd-field">
+                    <label asp-for="Email" class="trd-label">Correo electrónico</label>
+                    <input asp-for="Email" class="trd-input" placeholder="tucorreo@correo.com" autocomplete="username" />
+                    <span asp-validation-for="Email" class="trd-error"></span>
+                </div>
+
+                <div class="trd-field">
+                    <label asp-for="Password" class="trd-label">Contraseña</label>
+                    <div class="trd-input-wrap">
+                        <input asp-for="Password" class="trd-input" type="password" autocomplete="new-password" data-trd-password />
+                        <button type="button" class="trd-input-action" data-trd-toggle>Mostrar</button>
+                    </div>
+                    <div class="trd-hint">Mínimo 8 caracteres, con mayúscula, minúscula y número.</div>
+                    <span asp-validation-for="Password" class="trd-error"></span>
+                </div>
+
+                <div class="trd-field">
+                    <label asp-for="ConfirmarPassword" class="trd-label">Confirmar contraseña</label>
+                    <div class="trd-input-wrap">
+                        <input asp-for="ConfirmarPassword" class="trd-input" type="password" autocomplete="new-password" data-trd-password />
+                        <button type="button" class="trd-input-action" data-trd-toggle>Mostrar</button>
+                    </div>
+                    <span asp-validation-for="ConfirmarPassword" class="trd-error"></span>
+                </div>
+
+                <button class="btn-trd btn-trd--primary" type="submit" style="margin-top:6px">Crear cuenta</button>
+            </form>
+
+            <p class="trd-foot">¿Ya tienes cuenta? <a asp-action="Login">Inicia sesión</a></p>
         </div>
     </div>
-</div>
+
+    <script src="~/js/tramiterd.js" asp-append-version="true"></script>
+</body>
+</html>

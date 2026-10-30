@@ -1,27 +1,24 @@
 ﻿@model RolFormViewModel
 @{ ViewData["Title"] = "Nuevo rol"; }
 
-<div class="row justify-content-center">
-    <div class="col-md-6">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h1 class="h4 mb-3">Nuevo rol</h1>
-                <form asp-action="Crear" method="post" novalidate>
-                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
-                    <div class="mb-3">
-                        <label asp-for="Nombre" class="form-label">Nombre</label>
-                        <input asp-for="Nombre" class="form-control" />
-                        <span asp-validation-for="Nombre" class="text-danger small"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Descripcion" class="form-label">Descripción</label>
-                        <input asp-for="Descripcion" class="form-control" />
-                        <span asp-validation-for="Descripcion" class="text-danger small"></span>
-                    </div>
-                    <button class="btn btn-dark" type="submit">Crear</button>
-                    <a class="btn btn-link" asp-action="Index">Cancelar</a>
-                </form>
-            </div>
+<div class="trd-page-head"><h1>Nuevo rol</h1></div>
+
+<div class="trd-panel" style="max-width:520px">
+    <form asp-action="Crear" method="post" novalidate>
+        <div asp-validation-summary="ModelOnly" class="trd-alert trd-alert--err"></div>
+        <div class="trd-field">
+            <label asp-for="Nombre" class="trd-label">Nombre</label>
+            <input asp-for="Nombre" class="trd-input" />
+            <span asp-validation-for="Nombre" class="trd-error"></span>
         </div>
-    </div>
+        <div class="trd-field">
+            <label asp-for="Descripcion" class="trd-label">Descripción</label>
+            <input asp-for="Descripcion" class="trd-input" />
+            <span asp-validation-for="Descripcion" class="trd-error"></span>
+        </div>
+        <div class="trd-actions">
+            <button class="btn-trd btn-trd--primary btn-trd--sm" type="submit">Crear</button>
+            <a class="btn-trd btn-trd--outline btn-trd--sm" asp-action="Index">Cancelar</a>
+        </div>
+    </form>
 </div>

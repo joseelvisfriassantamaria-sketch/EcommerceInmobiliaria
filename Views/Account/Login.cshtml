@@ -1,28 +1,66 @@
 ﻿@model LoginViewModel
-@{ ViewData["Title"] = "Iniciar sesión"; }
-
-<div class="row justify-content-center">
-    <div class="col-md-5">
-        <div class="card shadow-sm">
-            <div class="card-body p-4">
-                <h1 class="h4 mb-3">Iniciar sesión</h1>
-                <form asp-action="Login" method="post" novalidate>
-                    <input type="hidden" asp-for="ReturnUrl" />
-                    <div asp-validation-summary="ModelOnly" class="text-danger small mb-2"></div>
-                    <div class="mb-3">
-                        <label asp-for="Email" class="form-label">Correo</label>
-                        <input asp-for="Email" class="form-control" autocomplete="username" />
-                        <span asp-validation-for="Email" class="text-danger small"></span>
-                    </div>
-                    <div class="mb-3">
-                        <label asp-for="Password" class="form-label">Contraseña</label>
-                        <input asp-for="Password" class="form-control" autocomplete="current-password" />
-                        <span asp-validation-for="Password" class="text-danger small"></span>
-                    </div>
-                    <button class="btn btn-dark w-100" type="submit">Entrar</button>
-                </form>
-                <p class="mt-3 mb-0 small text-center">¿No tiene cuenta? <a asp-action="Registro">Regístrese</a></p>
+@{
+    ViewData["Title"] = "Iniciar sesión";
+    Layout = null;
+}
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Iniciar sesión · TrámiteRD</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="~/css/tramiterd.css" asp-append-version="true" />
+</head>
+<body>
+    <div class="trd-shell">
+        <div class="trd-card">
+            <div class="trd-statusbar">
+                <span>9:41</span>
+                <span class="trd-statusbar__dots"><i></i><i></i><i></i></span>
             </div>
+
+            <div class="trd-logo" style="margin-bottom:22px">
+                <span class="trd-logo__badge">T</span>
+                <span class="trd-logo__text"><b>Trámite</b><span>RD</span></span>
+            </div>
+
+            <h1 class="trd-title">Bienvenido a TrámiteRD</h1>
+            <p class="trd-subtitle" style="margin-bottom:22px">Inicia sesión para continuar con tus trámites.</p>
+
+            @if (TempData["Ok"] is string ok)
+            {
+                <div class="trd-alert trd-alert--ok">@ok</div>
+            }
+
+            <form asp-action="Login" method="post" novalidate>
+                <input type="hidden" asp-for="ReturnUrl" />
+                <div asp-validation-summary="ModelOnly" class="trd-alert trd-alert--err"></div>
+
+                <div class="trd-field">
+                    <label asp-for="Email" class="trd-label">Correo electrónico</label>
+                    <input asp-for="Email" class="trd-input" placeholder="tucorreo@correo.com" autocomplete="username" />
+                    <span asp-validation-for="Email" class="trd-error"></span>
+                </div>
+
+                <div class="trd-field">
+                    <label asp-for="Password" class="trd-label">Contraseña</label>
+                    <div class="trd-input-wrap">
+                        <input asp-for="Password" class="trd-input" type="password" autocomplete="current-password" data-trd-password />
+                        <button type="button" class="trd-input-action" data-trd-toggle>Mostrar</button>
+                    </div>
+                    <span asp-validation-for="Password" class="trd-error"></span>
+                </div>
+
+                <button class="btn-trd btn-trd--primary" type="submit" style="margin-top:6px">Iniciar sesión</button>
+            </form>
+
+            <p class="trd-foot">¿No tienes cuenta? <a asp-action="Registro">Crear cuenta con mi cédula</a></p>
         </div>
     </div>
-</div>
+
+    <script src="~/js/tramiterd.js" asp-append-version="true"></script>
+</body>
+</html>
